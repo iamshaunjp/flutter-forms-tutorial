@@ -53,10 +53,32 @@ class _HomeState extends State<Home> {
                 children: [
 
                   // todo title
-
+                  TextFormField(
+                    maxLength: 20,
+                    decoration: const InputDecoration(
+                      label: Text('Todo title')
+                    ),
+                    validator: (v) {
+                      if (v == null || v.isEmpty) {
+                        return 'You must enter a value for the title.';
+                      }
+                      return null;
+                    },
+                  ),
 
                   // todo description
-
+                  TextFormField(
+                    maxLength: 40,
+                    decoration: const InputDecoration(
+                      label: Text('Todo description')
+                    ),
+                    validator: (v) {
+                      if (v == null || v.isEmpty || v.length < 5) {
+                        return 'Enter a description at least 5 chars long.';
+                      }
+                      return null;
+                    },
+                  ),
 
                   // priority
                  
@@ -64,7 +86,9 @@ class _HomeState extends State<Home> {
                   // submit button
                   const SizedBox(height: 20),
                   FilledButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _formGlobalKey.currentState!.validate();
+                    },
                     style: FilledButton.styleFrom(
                       backgroundColor: Colors.grey[800],
                       shape: RoundedRectangleBorder(
