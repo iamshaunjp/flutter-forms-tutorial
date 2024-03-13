@@ -11,7 +11,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-  String _email = '';
+  final TextEditingController _emailController = TextEditingController();
 
 
   final List<Todo> todos = [
@@ -53,14 +53,16 @@ class _HomeState extends State<Home> {
               decoration: const InputDecoration(
                 label: Text('Email address'),
               ),
-              onChanged: (value) {
-                setState(() {
-                  _email = value.trim();
-                });
-              },
+              controller: _emailController,
             ),
+            
             const SizedBox(height: 20),
-            Text('Your email: $_email'),
+            FilledButton(
+              onPressed: () {
+                print(_emailController.text.trim());
+              },
+              child: const Text('print email'),
+            )
             
           ],
         ),
