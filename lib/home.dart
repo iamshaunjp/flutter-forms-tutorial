@@ -13,6 +13,10 @@ class _HomeState extends State<Home> {
 
   final _formGlobalKey = GlobalKey<FormState>();
 
+  Priority _selectedPriority = Priority.low;
+  String _title = '';
+  String _description = '';
+
   final List<Todo> todos = [
     const Todo(
       title: 'Buy milk', 
@@ -64,6 +68,9 @@ class _HomeState extends State<Home> {
                       }
                       return null;
                     },
+                    onSaved: (value) {
+                      _title = value!;
+                    }
                   ),
 
                   // todo description
@@ -78,10 +85,14 @@ class _HomeState extends State<Home> {
                       }
                       return null;
                     },
+                    onSaved: (value) {
+                      _description = value!;
+                    }
                   ),
 
                   // priority
                   DropdownButtonFormField(
+                    value: _selectedPriority,
                     decoration: const InputDecoration(
                       label: Text('Priority of todo')
                     ),
@@ -92,7 +103,9 @@ class _HomeState extends State<Home> {
                       );
                     }).toList(),
                     onChanged: (value) {
-                      print(value);
+                      setState(() {
+                        _selectedPriority = value!;
+                      });
                     },
                   ),
 
@@ -100,7 +113,18 @@ class _HomeState extends State<Home> {
                   const SizedBox(height: 20),
                   FilledButton(
                     onPressed: () {
-                      _formGlobalKey.currentState!.validate();
+                      if (_formGlobalKey.currentState!.validate()) {
+                        _formGlobalKey.currentState!.save();
+
+                        // add new todo
+                        setState(() {
+                          todos.add(Todo(
+                            title: _title,
+                            description: _description,
+                            priority: _selectedPriority
+                          ));
+                        });
+                      }
                     },
                     style: FilledButton.styleFrom(
                       backgroundColor: Colors.grey[800],
