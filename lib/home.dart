@@ -81,7 +81,20 @@ class _HomeState extends State<Home> {
                   ),
 
                   // priority
-                 
+                  DropdownButtonFormField(
+                    decoration: const InputDecoration(
+                      label: Text('Priority of todo')
+                    ),
+                    items: Priority.values.map((p) {
+                      return DropdownMenuItem(
+                        value: p,
+                        child: Text(p.title)
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      print(value);
+                    },
+                  ),
 
                   // submit button
                   const SizedBox(height: 20),
