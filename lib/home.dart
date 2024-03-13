@@ -124,6 +124,9 @@ class _HomeState extends State<Home> {
                             priority: _selectedPriority
                           ));
                         });
+
+                        _formGlobalKey.currentState!.reset();
+                        _selectedPriority = Priority.low;
                       }
                     },
                     style: FilledButton.styleFrom(
