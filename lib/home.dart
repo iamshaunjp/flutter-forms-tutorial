@@ -11,6 +11,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
+  String _email = '';
+
 
   final List<Todo> todos = [
     const Todo(
@@ -45,6 +47,20 @@ class _HomeState extends State<Home> {
             Expanded(child: TodoList(todos: todos)),
         
             // form stuff below here
+            TextField(
+              keyboardType: TextInputType.emailAddress,
+              // obscureText: true,
+              decoration: const InputDecoration(
+                label: Text('Email address'),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  _email = value.trim();
+                });
+              },
+            ),
+            const SizedBox(height: 20),
+            Text('Your email: $_email'),
             
           ],
         ),
